@@ -3,9 +3,11 @@
 """
 
 from typing import List
+import mysql.connector
 import re
 import logging
 import sys
+import os
 
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -56,3 +58,14 @@ def get_logger() -> logging.Logger:
 
     logger.addHandler(stream_handler)
     return logger
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    user = os.environ.get('PERSONAL_DATA_DB_USERNAME')
+    password = os.environ.get('PERSONAL_DATA_DB_PASSWORD')
+    host = os.environ.get('PERSONAL_DATA_DB_HOST')
+    database = os.environ.get('PERSONAL_DATA_DB_NAME')
+    
+    connection = mysql.connector.connection
+    cnx = connection.MySQLConnection(user=user, password=password, host=host,
+                                     database=database)
+    return cnx
