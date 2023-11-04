@@ -3,7 +3,6 @@
 """
 
 import bcrypt
-import base64
 
 
 def hash_password(password: str) -> bytes:
@@ -16,7 +15,7 @@ def hash_password(password: str) -> bytes:
     return hashed
 
 
-def is_valid(hashed_password: bytes, password) -> bool:
+def is_valid(hashed_password: bytes, password: str) -> bool:
     """Checks for valid password.
     """
     return bcrypt.checkpw(
