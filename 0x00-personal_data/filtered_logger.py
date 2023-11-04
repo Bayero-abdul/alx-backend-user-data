@@ -6,7 +6,6 @@ from typing import List
 import mysql.connector
 import re
 import logging
-import sys
 import os
 
 
@@ -61,6 +60,8 @@ def get_logger() -> logging.Logger:
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Make a database connection.
+    """
     user = os.environ.get('PERSONAL_DATA_DB_USERNAME')
     password = os.environ.get('PERSONAL_DATA_DB_PASSWORD')
     host = os.environ.get('PERSONAL_DATA_DB_HOST')
