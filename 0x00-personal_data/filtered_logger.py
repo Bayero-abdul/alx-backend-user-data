@@ -15,12 +15,12 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 def filter_datum(fields: List[str],
                  redaction: str,
                  message: str,
-                 seperator: str) -> str:
+                 separator: str) -> str:
     """Returns the log message obfuscated.
     """
     joined_fields = "|".join(fields)
     output = re.sub(r'(({}))=[^{}]+'.format(joined_fields,
-                    seperator), r'\1={}'.format(redaction), message)
+                    separator), r'\1={}'.format(redaction), message)
     return output
 
 
