@@ -73,3 +73,27 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         password=password,
         database=database
     )
+
+
+def main() -> None:
+    """Retrieves all rows in the users table and \
+    display under a filtered format.
+    """
+    db = get_db()
+    logger = get_logger()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users;")
+    messages = []
+    for row in cursor:
+        msg = ""
+        for k, v in row.items():
+            msg += str(k)+'='+str(v)+';'
+        messages.append(msg)
+    for message in messages:
+        logger.info(message)
+    cursor.close()
+    db.close()
+
+
+if __name__ == '__main__':
+    main()
