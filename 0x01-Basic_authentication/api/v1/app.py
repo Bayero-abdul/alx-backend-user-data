@@ -20,6 +20,8 @@ if auth:
 
 @app.before_request
 def before_request():
+    """ Performs some routine before each request
+    """
     if auth is None:
         return
     excluded_paths = [
