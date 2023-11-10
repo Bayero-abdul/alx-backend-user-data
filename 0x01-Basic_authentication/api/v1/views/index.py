@@ -31,3 +31,10 @@ def raise_unauthorized() -> None:
     """ Raise unauthorized error
     """
     abort(401)
+
+
+@app_views.route('forbidden', strict_slashes=False)
+def raise_forbidden() -> None:
+    """ Raise forbidden error
+    """
+    abort(403)
