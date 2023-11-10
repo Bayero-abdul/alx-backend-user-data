@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Auth.py
+""" Auth.py
 """
 
 from flask import request
@@ -7,11 +7,11 @@ from typing import List, TypeVar
 
 
 class Auth:
-    """Manage API authentication
+    """ Manage API authentication
     """
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """ Attend to later
+        """ Defines which routes don't need authentication
         """
         if path is None:
             return True
@@ -23,9 +23,15 @@ class Auth:
         return True
 
     def authorization_header(self, request=None) -> str:
-        """ Attend to later
+        """ Validates all requests to secure the AP
         """
-        return None
+        if request is None:
+            return None
+
+        if request.headers.get('Authorization') is None:
+            return None
+
+        return request.headers.get('Authorization')
 
     def current_user(self, request=None) -> TypeVar('User'):
         """ Attend to later
