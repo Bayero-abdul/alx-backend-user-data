@@ -51,8 +51,8 @@ class BasicAuth(Auth):
             return None, None
         if ':' not in decoded_base64_authorization_header:
             return None, None
-
-        user_pwd = decoded_base64_authorization_header.split(':')
+        
+        user_pwd = decoded_base64_authorization_header.split(':', maxsplit=1)
         return tuple(user_pwd)
 
     def user_object_from_credentials(
@@ -79,7 +79,7 @@ class BasicAuth(Auth):
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """ Gets the current user
+        """ Retrieves the User instance for a request
         """
         auth_header = self.authorization_header(request)
         base64_auth_header = self.extract_base64_authorization_header(
