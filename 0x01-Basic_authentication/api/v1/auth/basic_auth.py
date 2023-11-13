@@ -51,7 +51,7 @@ class BasicAuth(Auth):
             return None, None
         if ':' not in decoded_base64_authorization_header:
             return None, None
-        
+
         user_pwd = decoded_base64_authorization_header.split(':', maxsplit=1)
         return tuple(user_pwd)
 
