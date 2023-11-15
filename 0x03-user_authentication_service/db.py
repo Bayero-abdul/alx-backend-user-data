@@ -44,7 +44,7 @@ class DB:
 
         return new_user
 
-    def find_user_by(self, **kwds):
+    def find_user_by(self, **kwds) -> User:
         """ Filters and returns a user found by the input arguments
         """
         try:
