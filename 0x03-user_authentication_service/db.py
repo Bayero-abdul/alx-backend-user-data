@@ -7,7 +7,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 
-from typing import TypeVar
 from user import Base, User
 
 
@@ -33,20 +32,13 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """ Adds a user
+        """ Creates and persists a new user in the database
         """
-        if not isinstance(email, str):
+        if not isinstance(email, str) or not isinstance(hashed_password, str):
             return None
 
-        if not isinstance(hashed_password, str):
-            return None
-        
-        try:
-            new_user = User(email=email, hashed_password=hashed_password)
+        new_user = User(email=email, hashed_password=hashed_password)
+        self._session.add(new_user)
+        self._session.commit()
 
-            self._session.add(new_user)
-            self._session.commit()
-
-            return new_user
-        except Exception:
-            return None
+        return new_user
