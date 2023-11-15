@@ -35,7 +35,10 @@ class DB:
     def add_user(self, email: str, hashed_password: str) -> User:
         """ Adds a user
         """
-        if not isinstance(email, str) or not isinstance(hashed_password, str):
+        if not isinstance(email, str):
+            return None
+
+        if not isinstance(hashed_password, str):
             return None
 
         new_user = User(email=email, hashed_password=hashed_password)
