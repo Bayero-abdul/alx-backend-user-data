@@ -35,6 +35,9 @@ class DB:
     def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
         """ Adds a user
         """
+        if not isinstance(email, str) or not isinstance(hashed_password, str):
+            return None
+
         new_user = User(email=email, hashed_password=hashed_password)
 
         self._session.add(new_user)
