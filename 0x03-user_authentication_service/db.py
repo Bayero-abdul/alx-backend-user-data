@@ -34,7 +34,7 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """ Creates and persists a new user in the database
+        """Creates and persists a new user in the database
         """
         if not isinstance(email, str) or not isinstance(hashed_password, str):
             return None
@@ -46,7 +46,7 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs) -> User:
-        """ Filters and returns a user found by the input arguments
+        """Filters and returns a user found by the input arguments
         """
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
@@ -55,3 +55,14 @@ class DB:
             return user
         except InvalidRequestError as e:
             raise e
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Updates the users attributes passed in the keyword arguments
+        """
+        user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            if k not in User.__table__.columns:
+                raise ValueError('Attribute not in User object')
+            setattr(user, k, v)
+
+        return None
