@@ -47,13 +47,16 @@ class DB:
     def find_user_by(self, **kwds) -> User:
         """ Filters and returns a user found by the input arguments
         """
-        try:
-            user = self._session.query(User).filter_by(**kwds).first()
+        users = self._session.query(User).all()
+        if users is None:
+            return None
 
-            if user is None:
-                raise NoResultFound("No user found")
-
+        for user in users:
+            for k in kwds:
+                if k not in user.__table__.columns:
+                    raise InvalidRequestError
+                if getattr(user, k) != kwds[k]:
+                    raise NoResultFound
             return user
 
-        except InvalidRequestError as e:
-            raise e
+        return None
