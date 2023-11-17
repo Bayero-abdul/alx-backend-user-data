@@ -9,8 +9,8 @@ from user import User
 from sqlalchemy.orm.exc import NoResultFound
 
 
-def _generate_uuid():
-    """Generates a new UUID
+def _generate_uuid() -> str:
+    """Generates a new UUID string
     """
     return str(uuid.uuid4())
 
