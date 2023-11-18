@@ -95,6 +95,6 @@ class Auth:
             return None
 
         if user and hasattr(user, 'session_id'):
-            setattr(user, session_id, None)
+            setattr(user, 'session_id', None)
 
         return None
