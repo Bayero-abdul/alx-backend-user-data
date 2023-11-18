@@ -2,7 +2,7 @@
 """Flask app module
 """
 
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request, abort, make_response, url_for
 from auth import Auth
 
 
@@ -60,6 +60,18 @@ def logout():
         abort(403)
     Auth.destroy_session(user.id)
     return redirect(url_for('basic_app'))
+
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile():
+    """Returns a user using session id
+    """
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
+    if user is None:
+        abort(403)
+
+    return jsonify({"email": f"{user.email}"}), 200
 
 
 if __name__ == '__main__':
