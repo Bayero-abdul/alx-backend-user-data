@@ -49,6 +49,7 @@ def login():
 
     return response
 
+
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout():
     """Find the user with the requested session ID and destroys the session
@@ -58,7 +59,7 @@ def logout():
     if user is None:
         abort(403)
     Auth.destroy_session(user.id)
-    return redirect(url_for('basci_app'))
+    return redirect(url_for('basic_app'))
 
 
 if __name__ == '__main__':
