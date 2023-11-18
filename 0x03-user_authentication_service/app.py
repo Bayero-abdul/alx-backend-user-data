@@ -2,7 +2,16 @@
 """Flask app module
 """
 
-from flask import Flask, jsonify, request, abort, make_response, url_for
+from flask import (
+    Flask,
+    jsonify,
+    request,
+    abort,
+    make_response,
+    url_for,
+    redirect
+)
+
 from auth import Auth
 
 
@@ -11,7 +20,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
-def basic_app():
+def hello():
     """Basic app
     """
     return jsonify({"message": "Bienvenue"})
@@ -54,12 +63,12 @@ def login():
 def logout():
     """Find the user with the requested session ID and destroys the session
     """
-    session_id = request.cookies.get('session_id')
+    session_id = request.cookies.get('session_id', None)
     user = AUTH.get_user_from_session_id(session_id)
-    if user is None:
+    if not user:
         abort(403)
     Auth.destroy_session(user.id)
-    return redirect(url_for('basic_app'))
+    return redirect(url_for('hello'))
 
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
